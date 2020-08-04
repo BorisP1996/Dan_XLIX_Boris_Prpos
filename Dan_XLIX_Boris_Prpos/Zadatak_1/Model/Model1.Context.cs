@@ -28,5 +28,6 @@ namespace Zadatak_1.Model
         public virtual DbSet<tblAll> tblAlls { get; set; }
         public virtual DbSet<tblEmploye> tblEmployes { get; set; }
         public virtual DbSet<tblManager> tblManagers { get; set; }
+        public virtual DbSet<tblDegree> tblDegrees { get; set; }
     }
 }
