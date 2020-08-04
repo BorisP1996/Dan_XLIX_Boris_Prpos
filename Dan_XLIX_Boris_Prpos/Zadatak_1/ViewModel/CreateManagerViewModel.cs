@@ -19,9 +19,24 @@ namespace Zadatak_1.ViewModel
         public CreateManagerViewModel(CreateManager createManagerOpen)
         {
             cm = createManagerOpen;
+            Sss = new tblDegree();
             sssList = GetSSS();
+            All = new tblAll();
         }
-        
+
+        private tblAll all;
+        public tblAll All
+        {
+            get
+            {
+                return all; 
+            }
+            set
+            {
+                all = value;
+                OnPropertyChanged("All");
+            }
+        }
         private List<tblDegree> ssslist;
         public List<tblDegree> sssList
         {
@@ -172,22 +187,31 @@ namespace Zadatak_1.ViewModel
             {
                 using (Entity context = new Entity())
                 {
+                    CreateManager cm = new CreateManager();
                     tblAll newAll = new tblAll();
                     newAll.FirstName = Name;
                     newAll.Surname = Surname;
                     newAll.Email = Mail;
                     newAll.Username = Username;
                     newAll.Pasword = Password;
-                    context.tblAlls.Add(newAll);
-                    context.SaveChanges();
-                    tblManager newManager = new tblManager();
-                    newManager.AllIDman = newAll.All_ID;
-                    newManager.Experience = Experience;
-                    newManager.SSS = Sss.name;
-                    newManager.ManagerFlor = Floor;
-                    context.tblManagers.Add(newManager);
-                    context.SaveChanges();
-                    MessageBox.Show("Manager is created");
+                    if (CheckCredentials(newAll.Username, newAll.Pasword) == true)
+                    {
+                        newAll.DateOfBirth = All.DateOfBirth.ToString();
+                        context.tblAlls.Add(newAll);
+                        context.SaveChanges();
+                        tblManager newManager = new tblManager();
+                        newManager.AllIDman = newAll.All_ID;
+                        newManager.Experience = Experience;
+                        newManager.SSS = Sss.name;
+                        newManager.ManagerFlor = Floor;
+                        context.tblManagers.Add(newManager);
+                        context.SaveChanges();
+                        MessageBox.Show("Manager is created");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Pasword or username already exists");
+                    }
                 }
             }
             catch (Exception ex)
@@ -234,6 +258,41 @@ namespace Zadatak_1.ViewModel
             list = context.tblDegrees.ToList();
 
             return list;
+        }
+        private bool CheckCredentials(string usernameInput,string paswordInput)
+        {
+            try
+            {
+                using (Entity context = new Entity())
+                {
+                    List<tblAll> allEmploye = context.tblAlls.ToList();
+
+                    List<string> usernameList = new List<string>();
+                    List<string> paswordList = new List<string>();
+
+                    foreach (tblAll item in allEmploye)
+                    {
+                        usernameList.Add(item.Username);
+                        paswordList.Add(item.Pasword);
+                    }
+
+                    if (!usernameList.Contains(usernameInput) && !paswordList.Contains(paswordInput))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+                return false;
+            }
         }
     }
 }

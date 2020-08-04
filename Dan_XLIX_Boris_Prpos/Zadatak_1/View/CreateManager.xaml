@@ -123,7 +123,10 @@
         <DatePicker HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Margin="415,123,0,0"
-                    Width="120" />
+                    Width="120"
+                    x:Name="datePicker"
+                    SelectedDate="{Binding All.DateOfBirth,UpdateSourceTrigger=PropertyChanged}"/>
+      
         <Button Content="Create Manager"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
@@ -136,5 +139,12 @@
                 Width="100"
                 Margin="590,339,0,0"
                 Command="{Binding Close,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock HorizontalAlignment="Left"
+                   TextWrapping="Wrap"
+                   Text="{Binding ElementName=datePicker,Path=Text}"
+                   VerticalAlignment="Top"
+                   Margin="578,127,0,0"
+                   Width="127"
+                   x:Name="dateBlock"/>
     </Grid>
 </Window>
