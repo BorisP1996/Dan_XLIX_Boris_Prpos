@@ -32,7 +32,8 @@
                  Text="{Binding Password,UpdateSourceTrigger=PropertyChanged}"
                  VerticalAlignment="Top"
                  Width="120"
-                 Margin="240,127,0,0" />
+                 Margin="240,127,0,0"
+                 FontFamily="pack://application:,,,/Resources/#password" />
         <Label Content="Username:"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"

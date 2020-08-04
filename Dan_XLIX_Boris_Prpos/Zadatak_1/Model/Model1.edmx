@@ -36,6 +36,13 @@
           <Property Name="Citizenship" Type="nvarchar" MaxLength="50" />
           <Property Name="Engagment" Type="nvarchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="tblEngagment">
+          <Key>
+            <PropertyRef Name="engID" />
+          </Key>
+          <Property Name="engID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="engName" Type="nvarchar" MaxLength="15" />
+        </EntityType>
         <EntityType Name="tblManagers">
           <Key>
             <PropertyRef Name="ManagerID" />
@@ -46,7 +53,7 @@
           <Property Name="Experience" Type="int" />
           <Property Name="SSS" Type="nvarchar" MaxLength="3" />
         </EntityType>
-        <Association Name="FK__tblEmploy__AllID__73BA3083">
+        <Association Name="FK__tblEmploy__AllID__08B54D69">
           <End Role="tblAll" Type="Self.tblAll" Multiplicity="0..1" />
           <End Role="tblEmploye" Type="Self.tblEmploye" Multiplicity="*" />
           <ReferentialConstraint>
@@ -58,7 +65,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblManage__AllID__72C60C4A">
+        <Association Name="FK__tblManage__AllID__07C12930">
           <End Role="tblAll" Type="Self.tblAll" Multiplicity="0..1" />
           <End Role="tblManagers" Type="Self.tblManagers" Multiplicity="*" />
           <ReferentialConstraint>
@@ -74,12 +81,13 @@
           <EntitySet Name="tblAll" EntityType="Self.tblAll" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDegree" EntityType="Self.tblDegree" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEmploye" EntityType="Self.tblEmploye" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEngagment" EntityType="Self.tblEngagment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblManagers" EntityType="Self.tblManagers" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__tblEmploy__AllID__73BA3083" Association="Self.FK__tblEmploy__AllID__73BA3083">
+          <AssociationSet Name="FK__tblEmploy__AllID__08B54D69" Association="Self.FK__tblEmploy__AllID__08B54D69">
             <End Role="tblAll" EntitySet="tblAll" />
             <End Role="tblEmploye" EntitySet="tblEmploye" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblManage__AllID__72C60C4A" Association="Self.FK__tblManage__AllID__72C60C4A">
+          <AssociationSet Name="FK__tblManage__AllID__07C12930" Association="Self.FK__tblManage__AllID__07C12930">
             <End Role="tblAll" EntitySet="tblAll" />
             <End Role="tblManagers" EntitySet="tblManagers" />
           </AssociationSet>
@@ -163,6 +171,7 @@
             <End Role="tblManagers" EntitySet="tblManagers" />
           </AssociationSet>
           <EntitySet Name="tblDegrees" EntityType="Zadatak_49Model.tblDegree" />
+          <EntitySet Name="tblEngagments" EntityType="Zadatak_49Model.tblEngagment" />
         </EntityContainer>
         <EntityType Name="tblDegree">
           <Key>
@@ -170,6 +179,13 @@
           </Key>
           <Property Name="degreIS" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblEngagment">
+          <Key>
+            <PropertyRef Name="engID" />
+          </Key>
+          <Property Name="engID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="engName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -219,6 +235,14 @@
               <MappingFragment StoreEntitySet="tblDegree">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="degreIS" ColumnName="degreIS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEngagments">
+            <EntityTypeMapping TypeName="Zadatak_49Model.tblEngagment">
+              <MappingFragment StoreEntitySet="tblEngagment">
+                <ScalarProperty Name="engName" ColumnName="engName" />
+                <ScalarProperty Name="engID" ColumnName="engID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -88,9 +88,13 @@
     <Compile Include="Model\tblEmploye.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\tblEngagment.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\tblManager.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\CreateEmployeViewModel.cs" />
     <Compile Include="ViewModel\CreateManagerViewModel.cs" />
     <Compile Include="ViewModel\MainWIndowViewModel.cs" />
     <Compile Include="ViewModel\MasterViewModel.cs" />
@@ -160,6 +164,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\password.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

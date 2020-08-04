@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Zadatak_1.Command;
+using Zadatak_1.Model;
 using Zadatak_1.View;
 
 namespace Zadatak_1.ViewModel
@@ -14,6 +15,7 @@ namespace Zadatak_1.ViewModel
     class MainWIndowViewModel:ViewModelBase
     {
         MainWindow main;
+        Entity context = new Entity();
 
         public MainWIndowViewModel(MainWindow mainOpen)
         {
@@ -83,6 +85,8 @@ namespace Zadatak_1.ViewModel
         }
         private void LoginExecute()
         {
+            
+
             try
             {
                 StreamReader sr = new StreamReader(@"..\..\OwnerAcces.txt");
@@ -100,6 +104,8 @@ namespace Zadatak_1.ViewModel
                     MasterView mv = new MasterView();
                     mv.ShowDialog();
                 }
+                
+
                 else
                 {
                     MessageBox.Show("InvalidParametres");
@@ -122,5 +128,6 @@ namespace Zadatak_1.ViewModel
                 return true;
             }
         }
+        
     }
 }

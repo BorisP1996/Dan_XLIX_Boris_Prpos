@@ -11,17 +11,17 @@ using Zadatak_1.View;
 
 namespace Zadatak_1.ViewModel
 {
-    class CreateManagerViewModel : ViewModelBase
+    class CreateEmployeViewModel : ViewModelBase
     {
-        CreateManager cm;
+        CreateEmploye ce;
         Entity context = new Entity();
 
-        public CreateManagerViewModel(CreateManager createManagerOpen)
+        public CreateEmployeViewModel(CreateEmploye ceOpen)
         {
-            cm = createManagerOpen;
-            Sss = new tblDegree();
-            sssList = GetSSS();
+            ce = ceOpen;
             All = new tblAll();
+            Engagment = new tblEngagment();
+            EngList = GetEng();
         }
 
         private tblAll all;
@@ -29,25 +29,12 @@ namespace Zadatak_1.ViewModel
         {
             get
             {
-                return all; 
+                return all;
             }
             set
             {
                 all = value;
                 OnPropertyChanged("All");
-            }
-        }
-        private List<tblDegree> ssslist;
-        public List<tblDegree> sssList
-        {
-            get
-            {
-                return ssslist;
-            }
-            set
-            {
-                ssslist = value;
-                OnPropertyChanged("sssList");
             }
         }
         private string name;
@@ -128,60 +115,74 @@ namespace Zadatak_1.ViewModel
                 OnPropertyChanged("Floor");
             }
         }
-        private int experience;
-        public int Experience
+        private string gender;
+        public string Gender
         {
             get
             {
-                return experience;
+                return gender;
             }
             set
             {
-                experience = value;
-                OnPropertyChanged("Experience");
+                gender = value;
+                OnPropertyChanged("Gender");
             }
         }
-        private tblDegree sss;
-        public tblDegree Sss
+        private tblEngagment engagment;
+        public tblEngagment Engagment
         {
             get
             {
-                return sss;
+                return engagment;
             }
             set
             {
-                sss = value;
-                OnPropertyChanged("Sss");
+                engagment = value;
+                OnPropertyChanged("Engagment");
             }
         }
-        private string birthday;
-        public string Birthday
+        private List<tblEngagment> engList;
+        public List<tblEngagment> EngList
         {
             get
             {
-                return birthday;
+                return engList;
             }
             set
             {
-                birthday = value;
-                OnPropertyChanged("Birthday");
+                engList = value;
+                OnPropertyChanged("EngList");
+            }
+        }
+        private string citizen;
+        public string Citizen
+        {
+            get
+            {
+                return citizen;
+            }
+            set
+            {
+                citizen = value;
+                OnPropertyChanged("Citizen");
             }
         }
 
-        private ICommand createManager;
-        public ICommand CreateManager
+        //
+        private ICommand createEmploye;
+        public ICommand CreateEmploye
         {
             get
             {
-                if (createManager == null)
+                if (createEmploye == null)
                 {
-                    createManager = new RelayCommand(param => CreateManagerExecute(), param => CanCreateManagerExecute());
+                    createEmploye = new RelayCommand(param => CreateEmployeExecute(), param => CanCreateEmployeExecute());
                 }
-                return createManager;
+                return createEmploye;
             }
         }
 
-        private void CreateManagerExecute()
+        private void CreateEmployeExecute()
         {
             try
             {
@@ -194,24 +195,28 @@ namespace Zadatak_1.ViewModel
                     newAll.Email = Mail;
                     newAll.Username = Username;
                     newAll.Pasword = Password;
-                    if (CheckCredentials(newAll.Username, newAll.Pasword) == true)
+                    tblEmploye newEmploye = new tblEmploye();
+                    newEmploye.Gender = Gender;
+                    newEmploye.EmployeFlor = Floor;
+                    if (CheckCredentials(newAll.Username, newAll.Pasword) == true && CheckGender(newEmploye.Gender) == true && CheckFloor(newEmploye.EmployeFlor.GetValueOrDefault()) == true)
                     {
                         newAll.DateOfBirth = All.DateOfBirth.ToString();
                         context.tblAlls.Add(newAll);
                         context.SaveChanges();
-                        tblManager newManager = new tblManager();
-                        newManager.AllIDman = newAll.All_ID;
-                        newManager.Experience = Experience;
-                        newManager.SSS = Sss.name;
-                        newManager.ManagerFlor = Floor;
-                        context.tblManagers.Add(newManager);
+                       
+                        newEmploye.AllIDemp = newAll.All_ID;
+                        newEmploye.Citizenship = Citizen;
+                        newEmploye.Engagment = Engagment.engName;
+                       
+                        context.tblEmployes.Add(newEmploye);
                         context.SaveChanges();
-                        MessageBox.Show("Manager is created");
+                        MessageBox.Show("Employe is created");
 
                     }
                     else
                     {
-                        MessageBox.Show("Pasword or username already exists");
+                        MessageBox.Show("Possible errors:\nPasword or username already exists\nInvalid gender input\nSelected floor can not be chosen\nbecause it does not have manager");
+
                     }
                 }
             }
@@ -221,9 +226,9 @@ namespace Zadatak_1.ViewModel
                 MessageBox.Show(ex.ToString());
             }
         }
-        private bool CanCreateManagerExecute()
+        private bool CanCreateEmployeExecute()
         {
-            if (String.IsNullOrEmpty(Name) || String.IsNullOrEmpty(Surname) || String.IsNullOrEmpty(Mail) || String.IsNullOrEmpty(Username) || String.IsNullOrEmpty(Password) || String.IsNullOrEmpty(Floor.ToString()) || String.IsNullOrEmpty(Experience.ToString()) || String.IsNullOrEmpty(Sss.name))
+            if (String.IsNullOrEmpty(Name) || String.IsNullOrEmpty(Surname) || String.IsNullOrEmpty(Mail) || String.IsNullOrEmpty(Username) || String.IsNullOrEmpty(Password) || String.IsNullOrEmpty(Floor.ToString()) || String.IsNullOrEmpty(Gender) || String.IsNullOrEmpty(Engagment.engName) || String.IsNullOrEmpty(Citizen))
             {
                 return false;
             }
@@ -246,21 +251,21 @@ namespace Zadatak_1.ViewModel
         }
         private void CloseExecute()
         {
-            cm.Close();
+            ce.Close();
         }
         private bool CanCloseExecute()
         {
             return true;
         }
 
-        private List<tblDegree> GetSSS()
+        private List<tblEngagment> GetEng()
         {
-            List<tblDegree> list = new List<tblDegree>();
-            list = context.tblDegrees.ToList();
+            List<tblEngagment> list = new List<tblEngagment>();
+            list = context.tblEngagments.ToList();
 
             return list;
         }
-        private bool CheckCredentials(string usernameInput,string paswordInput)
+        private bool CheckCredentials(string usernameInput, string paswordInput)
         {
             try
             {
@@ -295,5 +300,38 @@ namespace Zadatak_1.ViewModel
                 return false;
             }
         }
+        private bool CheckGender(string gender)
+        {
+            if (gender == "M" || gender =="Z")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool CheckFloor(int flor)
+        {
+            List<tblManager> managerList = context.tblManagers.ToList();
+            List<int> flors = new List<int>();
+
+            foreach (tblManager item in managerList)
+            {
+                flors.Add(item.ManagerFlor.GetValueOrDefault());
+            }
+
+            if (flors.Contains(flor))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
     }
 }

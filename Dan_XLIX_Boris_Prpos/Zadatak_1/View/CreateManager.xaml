@@ -50,14 +50,16 @@
                  Text="{Binding Floor,UpdateSourceTrigger=PropertyChanged}"
                  VerticalAlignment="Top"
                  Width="120"
-                 Margin="140,282,0,0" />
+                 Margin="140,282,0,0"
+                 PreviewTextInput="NumbersOnlyTextBox"/>
         <TextBox HorizontalAlignment="Left"
                  Height="23"
                  TextWrapping="Wrap"
                  Text="{Binding Experience,UpdateSourceTrigger=PropertyChanged}"
                  VerticalAlignment="Top"
                  Width="120"
-                 Margin="140,340,0,0" />
+                 Margin="140,340,0,0"
+                 PreviewTextInput="NumbersOnlyTextBox"/>
         <Label Content="Name:"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
@@ -139,12 +141,6 @@
                 Width="100"
                 Margin="590,339,0,0"
                 Command="{Binding Close,UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="{Binding ElementName=datePicker,Path=Text}"
-                   VerticalAlignment="Top"
-                   Margin="578,127,0,0"
-                   Width="127"
-                   x:Name="dateBlock"/>
+       
     </Grid>
 </Window>
